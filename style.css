@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: #eef9bf;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    font-family: Roboto;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 65.63px;
+    letter-spacing: -0.004em;
+    text-align: center;
+    color: #75b79e;
+    margin: 60px 0 20px 0;
+  }
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+}
+
+.carta {
+  width: 117px;
+  height: 146px;
+  border-radius: 5px;
+  border: 1px solid #99cea8;
+  opacity: 0px;
+  background-color: #a7e9af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 10px 10px 10px;
+  position: relative;
+  img {
+    width: 100px;
+    height: 100px;
+    top: 174px;
+    left: 736px;
+    gap: 0px;
+    opacity: 0px;
+  }
+}
