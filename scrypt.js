@@ -4,7 +4,8 @@ const maxCartas = 14;
 let qtdCartas = 0;
 let qtdJogadas = 0;
 
-//obterQtdCartas();
+obterQtdCartas();
+criarCartas();
 
 function obterQtdCartas() {
   while (!validarQtdCartas()) {
@@ -18,4 +19,12 @@ function validarQtdCartas() {
   const qtdValida = qtdCartas >= minCartas && qtdCartas <= maxCartas;
 
   return par && qtdValida;
+}
+
+function criarCartas() {
+  for (let i = 0; i < qtdCartas; i++) {
+    const acharHtml = document.querySelector("main");
+    const cartaSimples = `<div class="carta"><img src="img/front.png" alt="front parrot" /></div>`;
+    acharHtml.innerHTML += cartaSimples;
+  }
 }
