@@ -14,6 +14,8 @@ let qtdCartas = 0;
 let qtdJogadas = 0;
 let numDuplas = 0;
 let novoBaralho = [];
+let cartaClicada1 = "";
+let cartaClicada2 = "";
 
 obterQtdCartas();
 criarBaralho();
@@ -53,12 +55,11 @@ function criarBaralho() {
 }
 
 function criarCartas() {
-  console.log("entrouaq");
   const acharHtml = document.querySelector("main");
 
   for (let i = 0; i < qtdCartas; i++) {
     const cartaSimples = `
-    <div class="carta"><img id=${i} src="img/${novoBaralho[i]}.gif" alt="front parrot" /></div>
+    <div onclick="escolherCarta(this)" id=${i} class="carta"><img src="img/${novoBaralho[i]}.gif" alt="front parrot" /></div>
     `;
     acharHtml.innerHTML += cartaSimples;
   }
@@ -66,4 +67,29 @@ function criarCartas() {
 
 function aleatorizar() {
   return Math.random() - 0.5;
+}
+
+function escolherCarta(div) {
+  console.log(document.getElementById(div.id).children[0].src);
+  if (cartaClicada1 !== "" && cartaClicada2 === "") {
+    cartaClicada2 = document.getElementById(div.id).children[0].src;
+    if (cartaClicada1 === cartaClicada2) {
+      console.log("acertou mizeravi");
+      resetarEscolhas();
+      return;
+    }
+    if (cartaClicada1 !== cartaClicada2) {
+      console.log("errou mizeravi");
+      resetarEscolhas();
+      return;
+    }
+  }
+  if (cartaClicada1 === "") {
+    cartaClicada1 = document.getElementById(div.id).children[0].src;
+  }
+}
+
+function resetarEscolhas() {
+  cartaClicada1 = "";
+  cartaClicada2 = "";
 }
