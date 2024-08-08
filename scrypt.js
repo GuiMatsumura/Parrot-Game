@@ -16,6 +16,7 @@ let numDuplas = 0;
 let novoBaralho = [];
 let cartaClicada1 = "";
 let cartaClicada2 = "";
+let jogada = [];
 
 obterQtdCartas();
 criarBaralho();
@@ -59,7 +60,14 @@ function criarCartas() {
 
   for (let i = 0; i < qtdCartas; i++) {
     const cartaSimples = `
-    <div onclick="escolherCarta(this)" id=${i} class="carta"><img src="img/${novoBaralho[i]}.gif" alt="front parrot" /></div>
+    <div onclick="escolherCarta(this)" class="carta">
+     <div class="face-carta frente">
+        <img src="img/front.png" alt="front parrot" />
+      </div>
+     <div class="face-carta verso">
+       <img src="img/${novoBaralho[i]}.gif" alt="parrot" />
+     </div>
+    </div>
     `;
     acharHtml.innerHTML += cartaSimples;
   }
@@ -70,26 +78,51 @@ function aleatorizar() {
 }
 
 function escolherCarta(div) {
-  console.log(document.getElementById(div.id).children[0].src);
-  if (cartaClicada1 !== "" && cartaClicada2 === "") {
-    cartaClicada2 = document.getElementById(div.id).children[0].src;
-    if (cartaClicada1 === cartaClicada2) {
-      console.log("acertou mizeravi");
-      resetarEscolhas();
-      return;
+  if (isCartaValida(div)) {
+    div.classList.add("selecionado");
+    jogada.push(div);
+
+    if (jogada.length === 2) {
+      checarCartasIguais();
     }
-    if (cartaClicada1 !== cartaClicada2) {
-      console.log("errou mizeravi");
-      resetarEscolhas();
-      return;
-    }
-  }
-  if (cartaClicada1 === "") {
-    cartaClicada1 = document.getElementById(div.id).children[0].src;
   }
 }
 
 function resetarEscolhas() {
   cartaClicada1 = "";
   cartaClicada2 = "";
+}
+
+function isCartaValida(div) {
+  return (
+    !div.classList.contains("selecionado") ||
+    !div.classList.contains("finalizado")
+  );
+}
+
+function checarCartasIguais() {
+  const primeiraCarta = jogada[0];
+  const segundaCarta = jogada[1];
+  if (primeiraCarta.innerHTML === segundaCarta.innerHTML) {
+    primeiraCarta.classList.add("finalizado");
+    segundaCarta.classList.add("finalizado");
+    setTimeout(checarFinalJogo, 500);
+  } else {
+    setTimeout(virarCartasDoAvesso, 1000);
+  }
+}
+
+function virarCartasDoAvesso() {
+  jogada[0].classList.remove("selecionado");
+  jogada[1].classList.remove("selecionado");
+  jogada = [];
+}
+
+function checarFinalJogo() {
+  const cartasViradas = document.querySelectorAll(".finalizado").length;
+  if (cartasViradas === qtdCartas) {
+    alert("Boooooa, você ganhou!");
+    window.location.reload(true);
+  }
+  jogada = [];
 }
